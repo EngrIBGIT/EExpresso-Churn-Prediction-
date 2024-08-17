@@ -1,6 +1,8 @@
 # Expresso-Churn-Prediction-
 Customer churn prediction using Expresso dataset: EDA, preprocessing, and model development
 
+  `NOTE: This structured approach is a guide to help one navigate through the data science pipeline of the expresso dataset, from understanding the data to building a predictive model.`
+  
 ## Introduction
 This project is focused on predicting customer churn using a dataset containing various features about customers. The goal is to build a model that can predict whether a customer will churn based on these features.
 
