@@ -126,7 +126,7 @@ print(corr_with_target)
 
 ## Machine Learning Steps
 8. Model Building
-- model using Logistic Regression and Random Forest as examples.
+- model using Logistic Regression and Random Forest.
   
       # Split the data into training and testing sets
       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
@@ -147,9 +147,110 @@ print(corr_with_target)
           classifier = CatBoostClassifier(loss_function='Logloss', learning_rate=0.01, use_best_model=True, eval_metric='Logloss')
           classifier.fit(X_train, Y_train, eval_set=(X_val, Y_val), early_stopping_rounds=100, verbose=100)
 
-9. 
+9. Evaluation
+Evaluate the models using accuracy, precision, recall, F1-score, and a classification report
+- model evaluation using Logistic Regression and Random Forest.
 
-  
+          # Predictions
+          y_pred_logreg = logreg.predict(X_test)
+          y_pred_rf = rf.predict(X_test)
+          
+          # Logistic Regression Evaluation
+          print("Logistic Regression:")
+          print("Accuracy:", accuracy_score(y_test, y_pred_logreg))
+          print("Precision:", precision_score(y_test, y_pred_logreg))
+          print("Recall:", recall_score(y_test, y_pred_logreg))
+          print("F1 Score:", f1_score(y_test, y_pred_logreg))
+          print("Classification Report:\n", classification_report(y_test, y_pred_logreg))
+          
+          # Random Forest Evaluation
+          print("Random Forest:")
+          print("Accuracy:", accuracy_score(y_test, y_pred_rf))
+          print("Precision:", precision_score(y_test, y_pred_rf))
+          print("Recall:", recall_score(y_test, y_pred_rf))
+          print("F1 Score:", f1_score(y_test, y_pred_rf))
+          print("Classification Report:\n", classification_report(y_test, y_pred_rf))
 
-https://github.com/EngrIBGIT/EExpresso-Churn-Prediction-/blob/main/Ibrahim_Notebook_Expresso_Churn.ipynb
-https://drive.google.com/file/d/1GmELQx3ZiIaBf0Xm7a1OzAr-it8W_r-W/view?usp=sharing
+  - model evaluation using CatBoostClassifier.
+
+          Y_pred = classifier.predict(X_val)
+          print("Accuracy:", accuracy_score(Y_val, Y_pred))
+          print("Classification Report:\n", classification_report(Y_val, Y_pred))
+          
+          # Predicting probabilities for log loss calculation
+          Y_pred_proba = classifier.predict_proba(X_val)[:, 1]
+          print("Log Loss:", log_loss(Y_val, Y_pred_proba))
+          
+          # Confusion matrix
+          cm = confusion_matrix(Y_val, Y_pred)
+          sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+          plt.title('Confusion Matrix')
+          plt.xlabel('Predicted')
+          plt.ylabel('Actual')
+          plt.show()
+
+10. Feature Importance
+Plotting feature importances to understand which features the model found most useful
+
+        # Get the feature importances from the classifier
+        feat_importances = pd.Series(classifier.feature_importances_, index=X_train.columns)
+        
+        # Sort the feature importances and select the top 20
+        top_20_features = feat_importances.sort_values(ascending=False).head(20)
+        
+        # Plot the top 20 feature importances
+        top_20_features.sort_values().plot(kind='barh', figsize=(10, 8))
+        plt.title('Top 20 Feature Importances')
+        plt.show()
+10. Hyperparameter Tuning
+We'll use GridSearchCV for Random Forest for hyperparameter tuning as an example. This method will help optimize the model's performance.
+
+          from sklearn.model_selection import GridSearchCV
+          
+          # Define the parameter grid for Random Forest
+          param_grid = {
+              'n_estimators': [50, 100, 200],
+              'max_depth': [None, 10, 20, 30],
+              'min_samples_split': [2, 5, 10],
+              'min_samples_leaf': [1, 2, 4],
+              'bootstrap': [True, False]
+          }
+          
+          # Initialize GridSearchCV
+          grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2, scoring='f1')
+          
+          # Fit GridSearchCV to the data
+          grid_search.fit(X_train, y_train)
+          
+          # Best hyperparameters
+          print("Best Hyperparameters:", grid_search.best_params_)
+          
+          # Evaluate the best model
+          best_model = grid_search.best_estimator_
+          y_pred_best = best_model.predict(X_test)
+          
+          # Evaluation of the best model
+          print("Optimized Random Forest:")
+          print("Accuracy:", accuracy_score(y_test, y_pred_best))
+          print("Precision:", precision_score(y_test, y_pred_best))
+          print("Recall:", recall_score(y_test, y_pred_best))
+          print("F1 Score:", f1_score(y_test, y_pred_best))
+          print("Classification Report:\n", classification_report(y_test, y_pred_best))
+        
+12. Make predictions on Test Data and save to .CSV.
+
+          ## Making Predictions on Test Data
+          # Finally, we use the trained model to make predictions on the test set and prepare the submission file.
+          predictions = classifier.predict_proba(test)[:, 1]
+          baseline_sub = sample_sub.copy()
+          baseline_sub['CHURN'] = predictions
+          baseline_sub.to_csv('Ibrahim2_baseline_submission_catboost_expresso.csv', index=False)
+          
+          # Display the first few rows of the submission file
+          baseline_sub.head()
+
+### Link to file:
+
+![](https://github.com/EngrIBGIT/EExpresso-Churn-Prediction-/blob/main/Ibrahim_Notebook_Expresso_Churn.ipynb)
+
+![](https://drive.google.com/file/d/1GmELQx3ZiIaBf0Xm7a1OzAr-it8W_r-W/view?usp=sharing)
