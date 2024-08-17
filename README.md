@@ -26,6 +26,11 @@ The dataset includes 19 variables:
   - `from sklearn.model_selection import train_test_split`
   - `from sklearn.metrics import accuracy_score, classification_report, log_loss, confusion_matrix` 
 
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, accuracy_score, precision_score, recall_score, f1_score
+
     are imported for data manipulation, visualization, and model building.
     
 2. Load the Data:
@@ -94,8 +99,46 @@ print(corr_with_target)
         churn = train['CHURN']
         train = train.drop('CHURN', axis=1)
         d_tt = pd.concat([train, test], sort=False)
+7.  Handle Missing Values:
 
-  
+        # Calculate the percentage of missing values
+        percentage_missing = (missing_values / len(d_tt)) * 100
+        
+        # Combine the missing values and their percentages into a DataFrame
+        missing_data = pd.DataFrame({'Missing Values': missing_values, 'Percentage': percentage_missing})
+        
+        # Display the DataFrame sorted by percentage of missing values in descending order
+        missing_data = missing_data[missing_data['Missing Values'] > 0].sort_values(by='Percentage', ascending=False)
+        missing_data
+8.  Handle Categorical Values:
+   
+        # Display the number of unique categories in all object columns
+        categorical_columns = d_tt.select_dtypes(include=['object']).columns
+        
+        # Create a DataFrame to display the results
+        unique_categories = pd.DataFrame({
+            'Column': categorical_columns,
+            'Unique Categories': [d_tt[col].nunique() for col in categorical_columns]
+        })
+        
+        unique_categories = unique_categories.sort_values(by='Unique Categories', ascending=False)
+        unique_categories
+
+## Machine Learning Steps
+8. Model Building
+model using Logistic Regression and Random Forest as examples.
+      # Split the data into training and testing sets
+      X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+      
+      # Logistic Regression model
+      logreg = LogisticRegression()
+      logreg.fit(X_train, y_train)
+      
+      # Random Forest model
+      rf = RandomForestClassifier(random_state=42)
+      rf.fit(X_train, y_train)
+   
+9. 
 
 
 
