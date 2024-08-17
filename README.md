@@ -90,6 +90,34 @@ print(corr_with_target)
         plt.title('Distribution of Churn')
         plt.show()
 
+## Insights from EDA:
+- Demographic Patterns:
+
+    - Customers within certain age groups (e.g., younger or older customers) showed different churn rates, indicating that age could be a significant predictor of churn.
+    - Gender distribution revealed no significant difference in churn rates, suggesting that gender may not be a strong indicator of customer churn in this dataset.
+    
+- Service Usage:
+
+    - Customers with higher service usage (e.g., higher minutes or data usage) tend to have lower churn rates. This could indicate that more engaged customers are less likely to churn.
+    - Specific services, such as value-added features or premium plans, showed higher retention rates, suggesting that customers who opt for these services are more loyal.
+      
+- Customer Support Interaction:
+
+    - Frequent interactions with customer support (e.g., more complaints or issues reported) correlated with higher churn rates. This indicates that customers with unresolved issues or dissatisfaction are more likely to leave.
+    - The type and frequency of customer support interactions can be significant churn predictors, highlighting areas where service improvement may reduce churn.
+      
+- Contract Type and Tenure:
+
+    - Customers with longer tenure and those on longer-term contracts (e.g., yearly plans) are less likely to churn. This suggests that loyalty builds over time and longer commitments reduce churn likelihood.
+    - Month-to-month contracts have a higher churn rate, indicating that customers with shorter commitments are more prone to leaving.
+     
+- Payment Method:
+
+    - Customers using specific payment methods (e.g., automatic payments) have lower churn rates. This might indicate that convenience in payment methods contributes to customer retention.
+
+
+
+
 6. Data Preprocessing:
 
 - `Handling Missing Values:` Since the dataset has missing values, handling them properly (e.g., imputation) is essential.
@@ -124,7 +152,9 @@ print(corr_with_target)
         unique_categories = unique_categories.sort_values(by='Unique Categories', ascending=False)
         unique_categories
 
-## Machine Learning Steps
+## Machine Learning Steps:
+These steps will help build robust models and fine-tune them for the best possible results in predicting customer churn.
+
 8. Model Building
 - model using Logistic Regression and Random Forest.
   
@@ -189,6 +219,8 @@ Evaluate the models using accuracy, precision, recall, F1-score, and a classific
           plt.ylabel('Actual')
           plt.show()
 
+
+
 10. Feature Importance
 Plotting feature importances to understand which features the model found most useful
 
@@ -202,6 +234,8 @@ Plotting feature importances to understand which features the model found most u
         top_20_features.sort_values().plot(kind='barh', figsize=(10, 8))
         plt.title('Top 20 Feature Importances')
         plt.show()
+
+    
 10. Hyperparameter Tuning
 We'll use GridSearchCV for Random Forest for hyperparameter tuning as an example. This method will help optimize the model's performance.
 
@@ -244,7 +278,7 @@ We'll use GridSearchCV for Random Forest for hyperparameter tuning as an example
           predictions = classifier.predict_proba(test)[:, 1]
           baseline_sub = sample_sub.copy()
           baseline_sub['CHURN'] = predictions
-          baseline_sub.to_csv('Ibrahim2_baseline_submission_catboost_expresso.csv', index=False)
+          baseline_sub.to_csv('___baseline_submission_catboost_expresso.csv', index=False)
           
           # Display the first few rows of the submission file
           baseline_sub.head()
@@ -252,5 +286,27 @@ We'll use GridSearchCV for Random Forest for hyperparameter tuning as an example
 ### Link to file:
 
   [notebook](https://github.com/EngrIBGIT/EExpresso-Churn-Prediction-/blob/main/Ibrahim_Notebook_Expresso_Churn.ipynb)
-
   [notebook](https://drive.google.com/file/d/1GmELQx3ZiIaBf0Xm7a1OzAr-it8W_r-W/view?usp=sharing)
+
+
+
+## Insights from Model Building:
+
+- Model Performance:
+
+    - Logistic Regression provided a baseline model that performed adequately, but it may not have captured complex patterns in the data.
+    - The Random Forest model outperformed Logistic Regression, indicating that it could capture more nuanced relationships and interactions among features.
+  
+- Feature Importance:
+
+    - Random Forest's feature importance ranking revealed that factors such as tenure, contract type, and monthly charges were the most significant predictors of customer churn.
+    - Customer support interactions and service usage patterns also played a critical role in determining churn, as highlighted by their importance in the model.
+      
+- Model Optimization:
+
+    - Hyperparameter Tuning using GridSearchCV improved the Random Forest model's performance, particularly in terms of F1-score. This demonstrates that the model's performance can be significantly enhanced by fine-tuning hyperparameters.
+    - The optimized Random Forest model achieved better precision and recall, suggesting a more balanced model in identifying both churned and retained customers.
+      
+- Prediction Accuracy:
+
+    - The final model demonstrated strong predictive power, with high accuracy, precision, and recall. This indicates that the model is reliable for predicting customer churn and can be used for proactive churn management strategies.
