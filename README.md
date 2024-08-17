@@ -310,3 +310,22 @@ We'll use GridSearchCV for Random Forest for hyperparameter tuning as an example
 - Prediction Accuracy:
 
     - The final model demonstrated strong predictive power, with high accuracy, precision, and recall. This indicates that the model is reliable for predicting customer churn and can be used for proactive churn management strategies.
+ 
+## Actionable Recommendations:
+The following are actionable recommendations to be implemented;
+
+- Targeted Retention Strategies:
+
+    - Focus on customers with month-to-month contracts by offering incentives to switch to longer-term plans, which may reduce churn.
+    - Enhance customer support quality and ensure quick resolution of issues to prevent churn due to dissatisfaction.
+      
+- Service Engagement:
+
+    - Encourage usage of services with higher retention rates by promoting them to at-risk customers, possibly through targeted marketing campaigns.
+    - Introduce value-added services or bundled offers that can increase customer engagement and reduce churn.
+  
+- Payment Method Improvements:
+
+    - Promote automatic payment methods to customers who are currently using manual payment options, as this has been shown to correlate with lower churn rates.
+
+`These above insights and recommendations give guide in developing more effective customer retention strategies and reducing overall churn.`
