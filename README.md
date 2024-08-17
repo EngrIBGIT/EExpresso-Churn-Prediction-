@@ -126,9 +126,10 @@ print(corr_with_target)
 
 ## Machine Learning Steps
 8. Model Building
-model using Logistic Regression and Random Forest as examples.
+- model using Logistic Regression and Random Forest as examples.
+  
       # Split the data into training and testing sets
-      X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+      X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
       
       # Logistic Regression model
       logreg = LogisticRegression()
@@ -137,16 +138,18 @@ model using Logistic Regression and Random Forest as examples.
       # Random Forest model
       rf = RandomForestClassifier(random_state=42)
       rf.fit(X_train, y_train)
-   
+  
+- model using CatBoostClassifier.
+  
+          # Splitting the training data into train and validation sets
+          X_train, X_val, Y_train, Y_val = train_test_split(train, churn, test_size=0.2, random_state=101)
+          # Initializing and training the CatBoostClassifier
+          classifier = CatBoostClassifier(loss_function='Logloss', learning_rate=0.01, use_best_model=True, eval_metric='Logloss')
+          classifier.fit(X_train, Y_train, eval_set=(X_val, Y_val), early_stopping_rounds=100, verbose=100)
+
 9. 
 
-
-
-
-
-
-
-
+  
 
 https://github.com/EngrIBGIT/EExpresso-Churn-Prediction-/blob/main/Ibrahim_Notebook_Expresso_Churn.ipynb
 https://drive.google.com/file/d/1GmELQx3ZiIaBf0Xm7a1OzAr-it8W_r-W/view?usp=sharing
